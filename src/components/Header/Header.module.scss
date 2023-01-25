@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+  justify-content: center;
+  background-color: #022B32;
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    padding: 25px 20px;
+    width: 1560px;
+  }
+
+  &__menu {
+    display: flex;
+  }
+
+  &__item {
+    margin-left: 55px;
+  }
+
+  &__link {
+    line-height: 24px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
