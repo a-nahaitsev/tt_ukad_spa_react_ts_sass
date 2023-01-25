@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Header.module.scss';
 import logo from '../../assets/img/UKAD_logo.svg';
+import { Link } from 'react-router-dom';
 
 export const Header: React.FC = () => {
   return (
@@ -9,15 +10,15 @@ export const Header: React.FC = () => {
         <img src={logo} alt="" />
         <ul className={styles.header__menu}>
           <li className={styles.header__item}>
-            <a className={styles.header__link} href="#">
+            <Link className={styles.header__link} to="/home">
               Home
-            </a>
+            </Link>
           </li>
 
           <li className={styles.header__item}>
-            <a className={styles.header__link} href="#">
+            <Link className={styles.header__link} to="/products">
               Products
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
