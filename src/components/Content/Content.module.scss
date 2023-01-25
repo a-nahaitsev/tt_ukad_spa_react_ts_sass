@@ -1,0 +1,9 @@
+.content {
+  display: flex;
+  justify-content: center;
+
+  &__wrapper {
+    padding: 40px 20px 0;
+    width: 1560px;
+  }
+}

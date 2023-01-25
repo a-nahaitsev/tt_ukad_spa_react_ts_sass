@@ -4,7 +4,7 @@ import logo from '../../assets/img/UKAD_logo.svg';
 
 export const Header: React.FC = () => {
   return (
-    <div className={styles.header}>
+    <header className={styles.header}>
       <div className={styles.header__wrapper}>
         <img src={logo} alt="" />
         <ul className={styles.header__menu}>
@@ -21,6 +21,6 @@ export const Header: React.FC = () => {
           </li>
         </ul>
       </div>
-    </div>
+    </header>
   );
 };
