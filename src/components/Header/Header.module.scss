@@ -10,6 +10,14 @@
     width: 1560px;
   }
 
+  &__logo {
+    transition: transform 300ms;
+
+    &:hover {
+      transform: scale(105%);
+    }
+  }
+
   &__menu {
     display: flex;
   }

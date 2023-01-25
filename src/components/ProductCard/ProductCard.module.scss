@@ -1,5 +1,28 @@
 .product {
+  display: flex;
+  flex-direction: column;
   border: 3px solid #F2F2F2;
+
+  transition: transform 300ms;
+
+  &:hover {
+    transform: scale(105%);
+  }
+
+  &__image-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+  }
+  
+  &__image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+  }
 
   &__description {
     padding: 0 28px;

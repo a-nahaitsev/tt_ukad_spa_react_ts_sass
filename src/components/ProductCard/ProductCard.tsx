@@ -1,18 +1,23 @@
 import React from 'react';
-import productImage from '../../assets/img/product_image_example.png';
 import styles from './ProductCard.module.scss';
 
-export const ProductCard: React.FC = () => {
+type Props = {
+  imageUrl: string;
+  category: string;
+  title: string;
+};
+
+export const ProductCard: React.FC<Props> = ({ imageUrl, category, title }) => {
   return (
     <article className={styles.product}>
-      <img className={styles.product__image} src={productImage} alt="" />
+      <div className={styles['product__image-container']}>
+        <img className={styles.product__image} src={imageUrl} alt={title} />
+      </div>
 
       <div className={styles.product__description}>
-        <span className={styles.product__category}>Hardost</span>
+        <span className={styles.product__category}>{category}</span>
 
-        <h3 className={styles.product__title}>
-          Falbygdens Rekommenderar LEtivaz AOP opast hardost
-        </h3>
+        <h3 className={styles.product__title}>{title}</h3>
       </div>
     </article>
   );
