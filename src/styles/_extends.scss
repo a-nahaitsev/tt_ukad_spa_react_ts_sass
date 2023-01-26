@@ -1,0 +1,17 @@
+%flex-horizontal-centering {
+  display: flex;
+  justify-content: center;
+}
+
+%flex-vertical-centering {
+  display: flex;
+  align-items: center;
+  width: $width-container;
+}
+
+%text-title {
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 54px;
+  color: $color-text-black;
+}

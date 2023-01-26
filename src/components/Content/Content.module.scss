@@ -1,8 +1,10 @@
+@import '../../styles/vars';
+@import '../../styles/extends';
+
 .content {
-  display: flex;
-  justify-content: center;
+  @extend %flex-horizontal-centering;
 
   &__wrapper {
-    width: 1560px;
+    width: $width-container;
   }
 }

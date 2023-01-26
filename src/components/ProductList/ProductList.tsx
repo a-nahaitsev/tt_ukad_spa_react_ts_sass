@@ -19,7 +19,6 @@ export const ProductList: React.FC = () => {
 
   useEffect(() => {
     getProductsFromServer();
-    console.log(products);
   }, []);
 
   return (

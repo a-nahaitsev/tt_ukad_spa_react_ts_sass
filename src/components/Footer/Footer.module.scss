@@ -1,18 +1,18 @@
+@import '../../styles/vars';
+@import '../../styles/extends';
+
 .footer {
-  display: flex;
-  justify-content: center;
-  background-color: #022B32;
+  @extend %flex-horizontal-centering;
+  background-color: $color-main;
 
   &__wrapper {
-    display: flex;
-    align-items: center;
+    @extend %flex-vertical-centering;
     padding: 27px 29px;
-    width: 1560px;
   }
 
   &__text {
     line-height: 24px;
     text-transform: uppercase;
-    color: #FFFFFF;
+    color: $color-white;
   }
 }
