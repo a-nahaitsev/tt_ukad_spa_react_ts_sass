@@ -34,5 +34,10 @@
     &:hover {
       text-decoration: underline;
     }
+
+    &-active {
+      font-weight: 600;
+      text-decoration: underline;
+    }
   }
 }
