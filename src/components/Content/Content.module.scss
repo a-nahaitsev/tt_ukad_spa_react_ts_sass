@@ -3,6 +3,7 @@
 
 .content {
   @extend %flex-horizontal-centering;
+  flex: 1;
 
   &__wrapper {
     width: $width-container;
