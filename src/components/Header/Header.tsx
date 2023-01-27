@@ -22,7 +22,7 @@ export const Header: React.FC = () => {
               <NavLink
                 className={({ isActive }) =>
                   classNames(styles.header__link, {
-                    [styles['header__link-active']]: isActive,
+                    [styles['header__link--active']]: isActive,
                   })
                 }
                 to={to}
