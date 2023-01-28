@@ -52,7 +52,6 @@ export const init = (): AppThunk => {
   return (dispatch, getState) => {
     const { lastFetched } = getState().products;
     const now = new Date().getTime();
-    console.log(now, lastFetched, now - lastFetched);
 
     if (now - lastFetched > 5 * 60 * 1000) {
       dispatch(fetchProducts());
