@@ -1,0 +1,8 @@
+@import '../../styles/vars';
+@import '../../styles/extends';
+
+.title {
+  padding-top: 100px;
+  text-align: center;
+  @extend %text-title;
+}

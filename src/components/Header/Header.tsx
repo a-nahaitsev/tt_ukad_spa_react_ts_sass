@@ -12,10 +12,11 @@ export const Header: React.FC = () => {
 
   return (
     <header className={styles.header}>
-      <div className={styles.header__wrapper}>
+      <nav className={styles.header__wrapper}>
         <Link className={styles.header__logo} to="/home">
           <img src={logo} alt="UKAD logo" />
         </Link>
+
         <ul className={styles.header__menu}>
           {navLinks.map(({ id, to, text }) => (
             <li className={styles.header__item} key={id}>
@@ -32,7 +33,7 @@ export const Header: React.FC = () => {
             </li>
           ))}
         </ul>
-      </div>
+      </nav>
     </header>
   );
 };

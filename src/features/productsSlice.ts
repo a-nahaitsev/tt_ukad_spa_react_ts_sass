@@ -3,18 +3,20 @@ import { getProducts } from '../api/products';
 import { AppThunk } from '../app/store';
 import { Product } from '../types/Product';
 
+const CACHING_TIME = 5 * 60 * 1000;
+
 type ProductsState = {
   products: Product[];
   isLoading: boolean;
   error: string;
-  lastFetched: number;
+  lastFetchedTime: number;
 };
 
 const initialState: ProductsState = {
   products: [],
   isLoading: false,
   error: '',
-  lastFetched: new Date('0').getTime(),
+  lastFetchedTime: new Date('0').getTime(),
 };
 
 export const productsSlice = createSlice({
@@ -32,12 +34,12 @@ export const productsSlice = createSlice({
         products: action.payload,
         isLoading: false,
         error: '',
-        lastFetched: new Date().getTime(),
+        lastFetchedTime: new Date().getTime(),
       }))
       .addCase(fetchProducts.rejected, (state) => ({
         ...state,
         isLoading: false,
-        error: 'Something went wrong!',
+        error: 'Products have not been loaded. Try again later.',
       }));
   },
 });
@@ -50,10 +52,10 @@ const fetchProducts = createAsyncThunk<Product[]>('products/fetch', () => {
 
 export const init = (): AppThunk => {
   return (dispatch, getState) => {
-    const { lastFetched } = getState().products;
-    const now = new Date().getTime();
+    const { lastFetchedTime } = getState().products;
+    const currentTime = new Date().getTime();
 
-    if (now - lastFetched > 5 * 60 * 1000) {
+    if (currentTime - lastFetchedTime > CACHING_TIME) {
       dispatch(fetchProducts());
     }
   };

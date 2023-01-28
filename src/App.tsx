@@ -4,12 +4,10 @@ import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import styles from './App.module.scss';
 
-export const App: React.FC = () => {
-  return (
-    <div className={styles.page}>
-      <Header />
-      <Content />
-      <Footer />
-    </div>
-  );
-};
+export const App: React.FC = () => (
+  <div className={styles.page}>
+    <Header />
+    <Content />
+    <Footer />
+  </div>
+);
