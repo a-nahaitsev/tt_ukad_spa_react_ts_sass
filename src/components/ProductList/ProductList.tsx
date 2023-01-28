@@ -1,29 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { getProducts } from '../../api/products';
-import { Product } from '../../types/Product';
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Loader } from '../Loader';
 import { ProductCard } from '../ProductCard';
 import styles from './ProductList.module.scss';
+import { init } from '../../features/productsSlice';
 
 export const ProductList: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const getProductsFromServer = async () => {
-    try {
-      setIsLoading(true);
-      const productsFromServer = await getProducts();
-
-      setProducts(productsFromServer);
-    } catch (error: any) {
-      throw new Error(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const dispatch = useAppDispatch();
+  const { products, isLoading } = useAppSelector((state) => state.products);
 
   useEffect(() => {
-    getProductsFromServer();
+    dispatch(init());
   }, []);
 
   return (

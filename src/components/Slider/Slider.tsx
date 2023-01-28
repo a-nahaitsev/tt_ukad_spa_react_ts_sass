@@ -1,7 +1,5 @@
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
-import { getProducts } from '../../api/products';
-import { Product } from '../../types/Product';
 import { ProductCard } from '../ProductCard';
 import styles from './Slider.module.scss';
 import arrowImg from '../../assets/img/arrow_right.svg';
@@ -11,27 +9,16 @@ import {
   CARDS_NUMBER_TO_SHOW,
   CARD_WIDTH_WITH_GAP,
 } from './Slider.constants';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { init } from '../../features/productsSlice';
 
 export const Slider: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useAppDispatch();
+  const { products, isLoading } = useAppSelector((state) => state.products);
   const [shift, setShift] = useState(0);
 
-  const getProductsFromServer = async () => {
-    try {
-      setIsLoading(true);
-      const productsFromServer = await getProducts();
-
-      setProducts(productsFromServer);
-    } catch (error: any) {
-      throw new Error(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    getProductsFromServer();
+    dispatch(init());
   }, []);
 
   const maxShift =
