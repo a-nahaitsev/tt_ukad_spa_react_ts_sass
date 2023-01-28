@@ -2,3 +2,21 @@
   width: $size;
   height: $size;
 }
+
+@mixin onMobile {
+  @media (max-width: 560px) {
+    @content;
+  }
+}
+
+@mixin onTablet {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin onLaptop {
+  @media (max-width: 1280px) {
+    @content;
+  }
+}
