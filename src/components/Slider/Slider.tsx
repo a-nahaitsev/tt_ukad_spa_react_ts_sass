@@ -14,7 +14,9 @@ import { init } from '../../features/productsSlice';
 
 export const Slider: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { products, isLoading } = useAppSelector((state) => state.products);
+  const { products, isLoading, error } = useAppSelector(
+    (state) => state.products
+  );
   const [shift, setShift] = useState(0);
 
   useEffect(() => {
@@ -51,9 +53,11 @@ export const Slider: React.FC = () => {
   return (
     <section className={styles.slider}>
       {isLoading && <Loader />}
-      {!isLoading && (
+
+      {!isLoading && !error && (
         <>
-          <h3 className={styles.slider__title}>Home Page</h3>
+          <h2 className={styles.slider__title}>Home Page</h2>
+
           <div className={styles.slider__content}>
             <div className={styles.slider__wrapper}>
               <ul
@@ -102,6 +106,8 @@ export const Slider: React.FC = () => {
           </div>
         </>
       )}
+
+      {!isLoading && error && <p className={styles.slider__title}>{error}</p>}
     </section>
   );
 };

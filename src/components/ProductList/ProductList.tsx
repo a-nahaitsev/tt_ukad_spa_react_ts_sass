@@ -7,7 +7,9 @@ import { init } from '../../features/productsSlice';
 
 export const ProductList: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { products, isLoading } = useAppSelector((state) => state.products);
+  const { products, isLoading, error } = useAppSelector(
+    (state) => state.products
+  );
 
   useEffect(() => {
     dispatch(init());
@@ -16,9 +18,11 @@ export const ProductList: React.FC = () => {
   return (
     <section className={styles.products}>
       {isLoading && <Loader />}
-      {!isLoading && (
+
+      {!isLoading && !error && (
         <>
           <h2 className={styles.products__title}>Product Page</h2>
+
           <ul className={styles.products__content}>
             {products.map((product) => {
               const { id, image, breed_group, name } = product;
@@ -35,6 +39,8 @@ export const ProductList: React.FC = () => {
           </ul>
         </>
       )}
+
+      {!isLoading && error && <p className={styles.products__title}>{error}</p>}
     </section>
   );
 };
