@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getProducts } from '../api/products';
 import { AppThunk } from '../app/store';
+import { MINUTE } from '../constants/timeConstants';
 import { Product } from '../types/Product';
 
-const CACHING_TIME = 5 * 60 * 1000;
+const CACHING_TIME = 5 * MINUTE;
 
 type ProductsState = {
   products: Product[];
