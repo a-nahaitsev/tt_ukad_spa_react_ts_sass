@@ -6,10 +6,8 @@
   flex-direction: column;
   border: 3px solid $color-border-card;
 
-  transition: transform $transition-time;
-
   &:hover {
-    transform: scale(105%);
+    border-color: $color-main;
   }
 
   &__image-container {
