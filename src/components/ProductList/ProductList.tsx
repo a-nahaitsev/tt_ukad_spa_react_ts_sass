@@ -28,12 +28,13 @@ export const ProductList: React.FC = () => {
               const { id, image, breed_group, name } = product;
 
               return (
-                <ProductCard
-                  key={id}
-                  imageUrl={image.url}
-                  category={breed_group || 'No category'}
-                  title={name}
-                />
+                <div className={styles.products__product} key={id}>
+                  <ProductCard
+                    imageUrl={image.url}
+                    category={breed_group || 'No category'}
+                    title={name}
+                  />
+                </div>
               );
             })}
           </ul>

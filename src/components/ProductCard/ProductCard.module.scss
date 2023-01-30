@@ -6,6 +6,8 @@
   flex-direction: column;
   border: 3px solid $color-border-card;
 
+  transition: border-color $transition-time;
+
   &:hover {
     border-color: $color-main;
   }

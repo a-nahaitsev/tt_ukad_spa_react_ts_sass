@@ -30,4 +30,12 @@
       grid-template-columns: repeat(1, 1fr);
     }
   }
+
+  &__product {
+    transition: transform $transition-time;
+      
+    &:hover {
+      transform: scale(105%);
+    }
+  }
 }
