@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/tt_ukad_spa_react_ts_sass/static/css/main.dc808a59.css",
+    "main.css": "/tt_ukad_spa_react_ts_sass/static/css/main.ccab5470.css",
     "main.js": "/tt_ukad_spa_react_ts_sass/static/js/main.c7eb6f6a.js",
     "static/media/UKAD_logo.svg": "/tt_ukad_spa_react_ts_sass/static/media/UKAD_logo.047bc8da860930f0f6c5e1a81aed2318.svg",
     "index.html": "/tt_ukad_spa_react_ts_sass/index.html",
     "static/media/arrow_right.svg": "/tt_ukad_spa_react_ts_sass/static/media/arrow_right.410aa466d547332b744592c313527d8f.svg",
-    "main.dc808a59.css.map": "/tt_ukad_spa_react_ts_sass/static/css/main.dc808a59.css.map",
+    "main.ccab5470.css.map": "/tt_ukad_spa_react_ts_sass/static/css/main.ccab5470.css.map",
     "main.c7eb6f6a.js.map": "/tt_ukad_spa_react_ts_sass/static/js/main.c7eb6f6a.js.map"
   },
   "entrypoints": [
-    "static/css/main.dc808a59.css",
+    "static/css/main.ccab5470.css",
     "static/js/main.c7eb6f6a.js"
   ]
 }
