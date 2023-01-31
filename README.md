@@ -6,11 +6,11 @@ To see:
 - the design in Figma - follow [MOCKUP link](https://www.figma.com/file/K6aQh9dW3owT0QVcYIceSP/TEST_FE?node-id=0%3A1&t=YxoohxyRQj1bFyTy-0)
 
 ## Technologies:
-- **React** (Functional Components, Hooks, Router),
+- **React** (Functional Components, Hooks, Router, Swiper),
 - **JavaScript ES6+**,
 - **Typescript**,
 - **HTML**,
-- **SCSS** (Sass-preprocessor, Grid (responsive layout), Flexbox, mixins, extends),
+- **SCSS** (Responsive layout, Sass-preprocessor, Grid, Flexbox, mixins, extends),
 - **Redux Toolkit** (createAsynkThunk),
 - **REST API request**
 
