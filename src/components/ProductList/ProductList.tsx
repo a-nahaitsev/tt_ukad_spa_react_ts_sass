@@ -32,7 +32,7 @@ export const ProductList: React.FC = () => {
                   <ProductCard
                     id={id}
                     imageUrl={image.url}
-                    category={breed_group || 'No category'}
+                    category={breed_group || 'Unknown breed'}
                     title={name}
                   />
                 </div>

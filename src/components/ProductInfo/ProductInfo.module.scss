@@ -1,0 +1,46 @@
+@import '../../styles/vars';
+@import '../../styles/extends';
+
+.info {
+  padding: 40px 20px;
+  width: 100%;
+
+  &__title {
+    margin-bottom: 16px;
+
+    @extend %text-title;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+  }
+
+  &__image {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  &__description-title {
+    margin-bottom: 15px;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  &__properties {
+    margin-bottom: 15px;
+  }
+
+  &__property {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  &__property-value {
+    font-weight: 700;
+    text-align: right;
+  }
+}
