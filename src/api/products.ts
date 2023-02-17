@@ -6,3 +6,9 @@ export const getProducts = async () => {
 
   return products || null;
 };
+
+export const getProductById = async (productId: number) => {
+  const product = await client.get<Product>(`/breeds/${productId}`);
+
+  return product || null;
+};
