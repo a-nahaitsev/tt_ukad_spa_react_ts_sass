@@ -48,6 +48,7 @@ export const Slider: React.FC = () => {
               return (
                 <SwiperSlide className={styles.slider__item} key={id}>
                   <ProductCard
+                    id={id}
                     imageUrl={image.url}
                     category={breed_group || 'No category'}
                     title={name}

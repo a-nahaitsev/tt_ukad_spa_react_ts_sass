@@ -30,6 +30,7 @@ export const ProductList: React.FC = () => {
               return (
                 <div className={styles.products__product} key={id}>
                   <ProductCard
+                    id={id}
                     imageUrl={image.url}
                     category={breed_group || 'No category'}
                     title={name}
