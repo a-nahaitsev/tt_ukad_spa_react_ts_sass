@@ -15,7 +15,7 @@
   &__content {
     @include onLaptop {
       display: grid;
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: 1fr 2fr;
       gap: 40px;
     }
   }
@@ -24,6 +24,7 @@
     width: 100%;
     object-fit: cover;
     margin-bottom: 15px;
+    border-radius: 15px;
 
     @include onLaptop {
       margin-bottom: 0;
