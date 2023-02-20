@@ -8,7 +8,8 @@ export const getProducts = async () => {
 };
 
 export const getProductById = async (productId: number) => {
-  const product = await client.get<Product>(`/breeds/${productId}`);
+  const products = await getProducts();
+  const product = products.find((item) => item.id === productId);
 
   return product || null;
 };

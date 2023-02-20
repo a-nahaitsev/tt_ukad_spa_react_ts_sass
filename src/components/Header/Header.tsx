@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Header.module.scss';
 import logo from '../../assets/img/UKAD_logo.svg';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useMatch } from 'react-router-dom';
 import classNames from 'classnames';
 
 export const Header: React.FC = () => {
@@ -23,7 +23,7 @@ export const Header: React.FC = () => {
               <NavLink
                 className={({ isActive }) =>
                   classNames(styles.header__link, {
-                    [styles['header__link--active']]: isActive,
+                    [styles['header__link--active']]: useMatch(to) && isActive,
                   })
                 }
                 to={to}

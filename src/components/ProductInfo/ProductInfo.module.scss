@@ -1,5 +1,6 @@
 @import '../../styles/vars';
 @import '../../styles/extends';
+@import '../../styles/mixins';
 
 .info {
   padding: 40px 20px;
@@ -12,14 +13,21 @@
   }
 
   &__content {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 40px;
+    @include onLaptop {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 40px;
+    }
   }
 
   &__image {
     width: 100%;
     object-fit: cover;
+    margin-bottom: 15px;
+
+    @include onLaptop {
+      margin-bottom: 0;
+    }
   }
 
   &__description-title {

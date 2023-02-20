@@ -7,23 +7,67 @@ import {
   setIsLoading,
   setProduct,
 } from '../../features/productSlice';
+import { Loader } from '../Loader';
 import styles from './ProductInfo.module.scss';
 
 export const ProductInfo: React.FC = () => {
   const { productId = '' } = useParams();
   const dispatch = useAppDispatch();
-  const { product } = useAppSelector((state) => state.product);
-  const { products } = useAppSelector((state) => state.products);
-  const productImage = products.find(
-    (item) => item.reference_image_id === product?.reference_image_id
-  )?.image;
+  const { product, isLoading, error } = useAppSelector(
+    (state) => state.product
+  );
+
+  const propertiesData = [
+    {
+      name: 'Weight (imperial)',
+      value: product?.weight.imperial,
+    },
+    {
+      name: 'Weight (metric)',
+      value: product?.weight.metric,
+    },
+    {
+      name: 'Height (imperial)',
+      value: product?.height.imperial,
+    },
+    {
+      name: 'Height (metric)',
+      value: product?.height.metric,
+    },
+    {
+      name: 'Bred for',
+      value: product?.bred_for,
+    },
+    {
+      name: 'Breed group',
+      value: product?.breed_group,
+    },
+    {
+      name: 'Life span',
+      value: product?.life_span,
+    },
+    {
+      name: 'Temperament',
+      value: product?.temperament,
+    },
+    {
+      name: 'Origin',
+      value: product?.origin,
+    },
+  ];
 
   const getProductFromServer = async (id: string) => {
     try {
       dispatch(setIsLoading(true));
+      dispatch(setError(''));
+
       const productFromServer = await getProductById(Number(id));
 
-      dispatch(setProduct(productFromServer));
+      if (productFromServer) {
+        dispatch(setProduct(productFromServer));
+      } else {
+        dispatch(setError('Product has not been found'));
+      }
     } catch (error: any) {
       dispatch(setError('Product has not been loaded. Try again later.'));
     } finally {
@@ -37,94 +81,52 @@ export const ProductInfo: React.FC = () => {
 
   return (
     <section className={styles.info}>
-      <h2 className={styles.info__title}>{product?.name}</h2>
+      {isLoading && <Loader />}
 
-      <div className={styles.info__content}>
-        <div className={styles['info__image-container']}>
-          <img
-            src={productImage?.url}
-            alt={product?.name}
-            className={styles.info__image}
-          />
-        </div>
+      {!isLoading && !error && (
+        <>
+          <h2 className={styles.info__title}>{product?.name}</h2>
 
-        <div className={styles.info__description}>
-          <h5 className={styles['info__description-title']}>Characteristics</h5>
+          <div className={styles.info__content}>
+            <div className={styles['info__image-container']}>
+              <img
+                src={product?.image.url}
+                alt={product?.name}
+                className={styles.info__image}
+              />
+            </div>
 
-          <ul className={styles.info__properties}>
-            <li className={styles.info__property}>
-              <span>Weight (imperial)</span>
-              <span className={styles['info__property-value']}>
-                {product?.weight.imperial}
-              </span>
-            </li>
+            <div className={styles.info__description}>
+              <h5 className={styles['info__description-title']}>
+                Characteristics
+              </h5>
 
-            <li className={styles.info__property}>
-              <span>Weight (metric)</span>
-              <span className={styles['info__property-value']}>
-                {product?.weight.metric}
-              </span>
-            </li>
+              <ul className={styles.info__properties}>
+                {propertiesData.map((property) => (
+                  <li className={styles.info__property} key={property.name}>
+                    <span>{property.name}</span>
+                    <span className={styles['info__property-value']}>
+                      {property.value || '-'}
+                    </span>
+                  </li>
+                ))}
+              </ul>
 
-            <li className={styles.info__property}>
-              <span>Height (imperial)</span>
-              <span className={styles['info__property-value']}>
-                {product?.height.imperial}
-              </span>
-            </li>
+              {product?.description && (
+                <>
+                  <h5 className={styles['info__description-title']}>
+                    Description
+                  </h5>
 
-            <li className={styles.info__property}>
-              <span>Height (metric)</span>
-              <span className={styles['info__property-value']}>
-                {product?.height.metric}
-              </span>
-            </li>
+                  <p>{product.description}</p>
+                </>
+              )}
+            </div>
+          </div>
+        </>
+      )}
 
-            <li className={styles.info__property}>
-              <span>Bred for</span>
-              <span className={styles['info__property-value']}>
-                {product?.bred_for || '-'}
-              </span>
-            </li>
-
-            <li className={styles.info__property}>
-              <span>Breed group</span>
-              <span className={styles['info__property-value']}>
-                {product?.breed_group || '-'}
-              </span>
-            </li>
-
-            <li className={styles.info__property}>
-              <span>Life span</span>
-              <span className={styles['info__property-value']}>
-                {product?.life_span}
-              </span>
-            </li>
-
-            <li className={styles.info__property}>
-              <span>Temperament</span>
-              <span className={styles['info__property-value']}>
-                {product?.temperament}
-              </span>
-            </li>
-
-            <li className={styles.info__property}>
-              <span>Origin</span>
-              <span className={styles['info__property-value']}>
-                {product?.origin || '-'}
-              </span>
-            </li>
-          </ul>
-
-          {product?.description && (
-            <>
-              <h5 className={styles['info__description-title']}>Description</h5>
-
-              <p>{product.description}</p>
-            </>
-          )}
-        </div>
-      </div>
+      {!isLoading && error && <p className={styles.info__title}>{error}</p>}
     </section>
   );
 };
