@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/tt_ukad_spa_react_ts_sass/static/css/main.6fa7db69.css",
-    "main.js": "/tt_ukad_spa_react_ts_sass/static/js/main.7adffea0.js",
+    "main.css": "/tt_ukad_spa_react_ts_sass/static/css/main.eb2e6d64.css",
+    "main.js": "/tt_ukad_spa_react_ts_sass/static/js/main.7689b8ad.js",
     "static/media/UKAD_logo.svg": "/tt_ukad_spa_react_ts_sass/static/media/UKAD_logo.047bc8da860930f0f6c5e1a81aed2318.svg",
     "index.html": "/tt_ukad_spa_react_ts_sass/index.html",
     "static/media/arrow_right.svg": "/tt_ukad_spa_react_ts_sass/static/media/arrow_right.410aa466d547332b7445.svg",
-    "main.6fa7db69.css.map": "/tt_ukad_spa_react_ts_sass/static/css/main.6fa7db69.css.map",
-    "main.7adffea0.js.map": "/tt_ukad_spa_react_ts_sass/static/js/main.7adffea0.js.map"
+    "main.eb2e6d64.css.map": "/tt_ukad_spa_react_ts_sass/static/css/main.eb2e6d64.css.map",
+    "main.7689b8ad.js.map": "/tt_ukad_spa_react_ts_sass/static/js/main.7689b8ad.js.map"
   },
   "entrypoints": [
-    "static/css/main.6fa7db69.css",
-    "static/js/main.7adffea0.js"
+    "static/css/main.eb2e6d64.css",
+    "static/js/main.7689b8ad.js"
   ]
 }
