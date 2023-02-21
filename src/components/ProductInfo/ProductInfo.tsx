@@ -77,6 +77,14 @@ export const ProductInfo: React.FC = () => {
 
   useEffect(() => {
     getProductFromServer(productId);
+
+    window.addEventListener(
+      'hashchange',
+      () => {
+        window.location.reload();
+      },
+      false
+    );
   }, []);
 
   return (
