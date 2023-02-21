@@ -1,12 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getProductById } from '../../api/products';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import {
-  setError,
-  setIsLoading,
-  setProduct,
-} from '../../features/productSlice';
+import { fetchProductById } from '../../features/productSlice';
 import { Loader } from '../Loader';
 import styles from './ProductInfo.module.scss';
 
@@ -56,27 +51,8 @@ export const ProductInfo: React.FC = () => {
     },
   ];
 
-  const getProductFromServer = async (id: string) => {
-    try {
-      dispatch(setIsLoading(true));
-      dispatch(setError(''));
-
-      const productFromServer = await getProductById(Number(id));
-
-      if (productFromServer) {
-        dispatch(setProduct(productFromServer));
-      } else {
-        dispatch(setError('Product has not been found'));
-      }
-    } catch (error: any) {
-      dispatch(setError('Product has not been loaded. Try again later.'));
-    } finally {
-      dispatch(setIsLoading(false));
-    }
-  };
-
   useEffect(() => {
-    getProductFromServer(productId);
+    dispatch(fetchProductById(Number(productId)));
 
     const reloadPage = () => window.location.reload();
 
