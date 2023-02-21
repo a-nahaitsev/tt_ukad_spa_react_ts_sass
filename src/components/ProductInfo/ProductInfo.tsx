@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { fetchProductById } from '../../features/productSlice';
 import { Loader } from '../Loader';
@@ -15,19 +15,19 @@ export const ProductInfo: React.FC = () => {
   const propertiesData = [
     {
       name: 'Weight (imperial)',
-      value: product?.weight.imperial,
+      value: product?.weight?.imperial,
     },
     {
       name: 'Weight (metric)',
-      value: product?.weight.metric,
+      value: product?.weight?.metric,
     },
     {
       name: 'Height (imperial)',
-      value: product?.height.imperial,
+      value: product?.height?.imperial,
     },
     {
       name: 'Height (metric)',
-      value: product?.height.metric,
+      value: product?.height?.metric,
     },
     {
       name: 'Bred for',
@@ -68,6 +68,9 @@ export const ProductInfo: React.FC = () => {
 
       {!isLoading && !error && (
         <>
+          <Link className={styles.info__link} to={'/products'}>
+            {'<<< Back to products list'}
+          </Link>
           <h2 className={styles.info__title}>{product?.name}</h2>
 
           <div className={styles.info__content}>
