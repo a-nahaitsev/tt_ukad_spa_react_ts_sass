@@ -1,3 +1,4 @@
+import { Image } from '../types/Image';
 import { Product } from '../types/Product';
 import { client } from '../utils/fetch';
 
@@ -8,8 +9,12 @@ export const getProducts = async () => {
 };
 
 export const getProductById = async (productId: number) => {
-  const products = await getProducts();
-  const product = products.find((item) => item.id === productId);
+  const product = await client.get<Product>(`/breeds/${productId}`);
+  const image = await client.get<Image>(
+    `/images/${product.reference_image_id}`
+  );
+
+  product.image = image;
 
   return product || null;
 };

@@ -78,13 +78,12 @@ export const ProductInfo: React.FC = () => {
   useEffect(() => {
     getProductFromServer(productId);
 
-    window.addEventListener(
-      'hashchange',
-      () => {
-        window.location.reload();
-      },
-      false
-    );
+    const reloadPage = () => window.location.reload();
+
+    window.addEventListener('hashchange', reloadPage, false);
+    return () => {
+      window.removeEventListener('hashchange', reloadPage, false);
+    };
   }, []);
 
   return (
@@ -98,7 +97,7 @@ export const ProductInfo: React.FC = () => {
           <div className={styles.info__content}>
             <div className={styles['info__image-container']}>
               <img
-                src={product?.image.url}
+                src={product?.image?.url}
                 alt={product?.name}
                 className={styles.info__image}
               />
@@ -110,8 +109,8 @@ export const ProductInfo: React.FC = () => {
               </h5>
 
               <ul className={styles.info__properties}>
-                {propertiesData.map((property) => (
-                  <li className={styles.info__property} key={property.name}>
+                {propertiesData.map((property, index) => (
+                  <li className={styles.info__property} key={index}>
                     <span>{property.name}</span>
                     <span className={styles['info__property-value']}>
                       {property.value || '-'}
