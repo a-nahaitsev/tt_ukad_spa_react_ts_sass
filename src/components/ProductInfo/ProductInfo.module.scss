@@ -1,0 +1,64 @@
+@import '../../styles/vars';
+@import '../../styles/extends';
+@import '../../styles/mixins';
+
+.info {
+  padding: 40px 20px;
+  width: 100%;
+
+  &__link {
+    color: #000;
+    margin-bottom: 20px;
+
+    &:hover {
+      color: $color-main;
+    }
+  }
+
+  &__title {
+    margin-bottom: 16px;
+
+    @extend %text-title;
+  }
+
+  &__content {
+    @include onLaptop {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 40px;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border-radius: 15px;
+
+    @include onLaptop {
+      margin-bottom: 0;
+    }
+  }
+
+  &__description-title {
+    margin-bottom: 15px;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  &__properties {
+    margin-bottom: 15px;
+  }
+
+  &__property {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  &__property-value {
+    font-weight: 700;
+    text-align: right;
+  }
+}

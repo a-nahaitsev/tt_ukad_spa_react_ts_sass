@@ -1,9 +1,10 @@
 import React from 'react';
 import { Slider } from '../Slider';
 import { ProductList } from '../ProductList';
+import { NotFountPage } from '../NotFoundPage';
+import { ProductInfo } from '../ProductInfo';
 import styles from './Content.module.scss';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { NotFountPage } from '../NotFoundPage';
 
 export const Content: React.FC = () => (
   <main className={styles.content}>
@@ -11,7 +12,10 @@ export const Content: React.FC = () => (
       <Routes>
         <Route path="/" element={<Slider />} />
         <Route path="/home" element={<Navigate to="/" replace />} />
-        <Route path="/products" element={<ProductList />} />
+        <Route path="/products">
+          <Route index element={<ProductList />} />
+          <Route path=":productId" element={<ProductInfo />} />
+        </Route>
         <Route path="*" element={<NotFountPage />} />
       </Routes>
     </div>

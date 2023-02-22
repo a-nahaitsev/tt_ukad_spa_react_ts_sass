@@ -13,4 +13,6 @@ export interface Product {
   reference_image_id: string;
   image: Image;
   name: string;
+  description: string;
+  country_code: string;
 }

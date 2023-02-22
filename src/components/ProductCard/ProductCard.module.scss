@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   border: 3px solid $color-border-card;
+  height: 100%;
 
   transition: border-color $transition-time;
 
