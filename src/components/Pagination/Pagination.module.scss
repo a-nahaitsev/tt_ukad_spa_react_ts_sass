@@ -1,0 +1,45 @@
+@import '../../styles/vars';
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  &__item {
+    &:first-child {
+      margin-right: 15px;
+    }
+
+    &:last-child {
+      margin-left: 15px;
+    }
+  }
+
+  &__button {
+    padding: 5px;
+    width: 35px;
+    height: 100%;
+    border: 1px solid $color-border-card;
+    border-radius: 5px;
+
+    font-size: 20px;
+    text-align: center;
+
+    &:hover {
+      border-color: $color-text-black;
+    }
+
+    &:disabled {
+      border: 1px solid $color-border-card;
+      color: $color-border-card;
+      cursor: default;
+    }
+
+    &--active {
+      background-color: $color-main;
+      color: $color-white;
+      border-color: $color-main;
+    }
+  }
+}

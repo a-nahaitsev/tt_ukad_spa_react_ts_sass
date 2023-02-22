@@ -1,10 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getProducts } from '../api/products';
-import { AppThunk } from '../app/store';
-import { MINUTE } from '../constants/timeConstants';
 import { Product } from '../types/Product';
-
-const CACHING_TIME = 5 * MINUTE;
 
 type ProductsState = {
   products: Product[];
@@ -47,17 +43,9 @@ export const productsSlice = createSlice({
 
 export default productsSlice.reducer;
 
-const fetchProducts = createAsyncThunk<Product[]>('products/fetch', () => {
-  return getProducts();
-});
-
-export const init = (): AppThunk => {
-  return (dispatch, getState) => {
-    const { lastFetchedTime } = getState().products;
-    const currentTime = new Date().getTime();
-
-    if (currentTime - lastFetchedTime > CACHING_TIME) {
-      dispatch(fetchProducts());
-    }
-  };
-};
+export const fetchProducts = createAsyncThunk<Product[], number>(
+  'products/fetch',
+  (page: number) => {
+    return getProducts(page);
+  }
+);

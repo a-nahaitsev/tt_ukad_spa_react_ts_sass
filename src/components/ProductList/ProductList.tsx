@@ -1,19 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Loader } from '../Loader';
 import { ProductCard } from '../ProductCard';
 import styles from './ProductList.module.scss';
-import { init } from '../../features/productsSlice';
+import { fetchProducts } from '../../features/productsSlice';
+import { Pagination } from '../Pagination';
+import { useSearchParams } from 'react-router-dom';
 
 export const ProductList: React.FC = () => {
   const dispatch = useAppDispatch();
   const { products, isLoading, error } = useAppSelector(
     (state) => state.products
   );
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [currentPage, setCurrentPage] = useState(
+    Number(searchParams.get('page')) || 1
+  );
 
   useEffect(() => {
-    dispatch(init());
-  }, []);
+    searchParams.set('page', String(currentPage));
+    setSearchParams(searchParams);
+    dispatch(fetchProducts(currentPage));
+  }, [currentPage]);
 
   return (
     <section className={styles.products}>
@@ -39,6 +47,11 @@ export const ProductList: React.FC = () => {
               );
             })}
           </ul>
+
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </>
       )}
 
