@@ -24,15 +24,11 @@ export const Pagination: React.FC<Props> = ({
   };
 
   const handleLeftButtonClick = () => {
-    if (currentPage) {
-      setCurrentPage(currentPage - 1);
-    }
+    setCurrentPage(currentPage - 1);
   };
 
   const handleRightButtonClick = () => {
-    if (currentPage !== LAST_PAGE_NUMBER) {
-      setCurrentPage(currentPage + 1);
-    }
+    setCurrentPage(currentPage + 1);
   };
 
   return (
