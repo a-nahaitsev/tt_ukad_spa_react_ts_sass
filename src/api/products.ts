@@ -2,8 +2,10 @@ import { Image } from '../types/Image';
 import { Product } from '../types/Product';
 import { client } from '../utils/fetch';
 
-export const getProducts = async () => {
-  const products = await client.get<Product[]>('/breeds?limit=10&page=0');
+export const getProducts = async (page: number) => {
+  const products = await client.get<Product[]>(
+    `/breeds?limit=10&page=${page - 1}`
+  );
 
   return products || null;
 };

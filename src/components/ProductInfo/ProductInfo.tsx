@@ -53,13 +53,6 @@ export const ProductInfo: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchProductById(Number(productId)));
-
-    const reloadPage = () => window.location.reload();
-
-    window.addEventListener('hashchange', reloadPage, false);
-    return () => {
-      window.removeEventListener('hashchange', reloadPage, false);
-    };
   }, []);
 
   return (

@@ -3,7 +3,7 @@ import { ProductCard } from '../ProductCard';
 import styles from './Slider.module.scss';
 import { Loader } from '../Loader';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { init } from '../../features/productsSlice';
+import { fetchProducts } from '../../features/productsSlice';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import 'swiper/scss';
@@ -16,7 +16,7 @@ export const Slider: React.FC = () => {
   );
 
   useEffect(() => {
-    dispatch(init());
+    dispatch(fetchProducts());
   }, []);
 
   return (
