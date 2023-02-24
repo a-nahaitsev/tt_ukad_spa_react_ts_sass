@@ -6,6 +6,8 @@ import styles from './ProductList.module.scss';
 import { fetchProducts } from '../../features/productsSlice';
 import { Pagination } from '../Pagination';
 import { useSearchParams } from 'react-router-dom';
+import { SearchBar } from '../SearchBar';
+import { SearchIconColor } from '../../types/SearchIconColor';
 
 export const ProductList: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -29,7 +31,11 @@ export const ProductList: React.FC = () => {
 
       {!isLoading && !error && (
         <>
-          <h2 className={styles.products__title}>Product Page</h2>
+          <div className={styles.products__heading}>
+            <h2 className={styles.products__title}>Product Page</h2>
+
+            <SearchBar searchIconColor={SearchIconColor.Gray} />
+          </div>
 
           <ul className={styles.products__content}>
             {products.map((product) => {
