@@ -1,8 +1,9 @@
 import classNames from 'classnames';
 import React from 'react';
+import { getPages } from '../../utils/getPages';
 import styles from './Pagination.module.scss';
 
-const LAST_PAGE_NUMBER = 18;
+const TOTAL_PAGES_NUMBER = 18;
 
 type Props = {
   currentPage: number;
@@ -13,16 +14,6 @@ export const Pagination: React.FC<Props> = ({
   currentPage,
   setCurrentPage,
 }) => {
-  const getPages = (pagesNumber: number) => {
-    const pages = [];
-
-    for (let i = 0; i < pagesNumber; i++) {
-      pages.push(i + 1);
-    }
-
-    return pages;
-  };
-
   const handleLeftButtonClick = () => {
     setCurrentPage(currentPage - 1);
   };
@@ -43,7 +34,7 @@ export const Pagination: React.FC<Props> = ({
         </button>
       </li>
 
-      {getPages(LAST_PAGE_NUMBER).map((page, index) => (
+      {getPages(TOTAL_PAGES_NUMBER).map((page, index) => (
         <li className={styles.pagination__item} key={index}>
           <button
             className={classNames(styles.pagination__button, {
@@ -60,7 +51,7 @@ export const Pagination: React.FC<Props> = ({
         <button
           className={styles.pagination__button}
           onClick={handleRightButtonClick}
-          disabled={currentPage === LAST_PAGE_NUMBER}
+          disabled={currentPage === TOTAL_PAGES_NUMBER}
         >
           {'>'}
         </button>

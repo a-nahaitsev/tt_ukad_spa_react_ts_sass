@@ -16,7 +16,7 @@ export const Slider: React.FC = () => {
   );
 
   useEffect(() => {
-    dispatch(fetchProducts(1));
+    dispatch(fetchProducts());
   }, []);
 
   return (

@@ -43,9 +43,9 @@ export const productsSlice = createSlice({
 
 export default productsSlice.reducer;
 
-export const fetchProducts = createAsyncThunk<Product[], number>(
+export const fetchProducts = createAsyncThunk<Product[], number | undefined>(
   'products/fetch',
-  (page: number) => {
+  (page = 1) => {
     return getProducts(page);
   }
 );
