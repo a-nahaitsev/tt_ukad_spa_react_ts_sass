@@ -22,7 +22,7 @@ export const ProductList: React.FC = () => {
   useEffect(() => {
     searchParams.set('page', String(currentPage));
     setSearchParams(searchParams);
-    dispatch(fetchProducts(currentPage));
+    dispatch(fetchProducts({ page: currentPage, query: 'dog' }));
   }, [currentPage]);
 
   return (
