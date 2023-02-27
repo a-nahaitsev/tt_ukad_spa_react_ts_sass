@@ -17,6 +17,9 @@
   }
 
   &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 60px;
     height: 60px;
     border: 2px solid $color-border-card;
@@ -39,5 +42,10 @@
     &--active {
       border-color: #232323;
     }
+  }
+
+  &__icon {
+    height: 20px;
+    color: #757575;
   }
 }

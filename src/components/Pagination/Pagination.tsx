@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import { getPages } from '../../utils/getPages';
+import Icon from '../Icon/Icon';
 import styles from './Pagination.module.scss';
 
 const TOTAL_PAGES_NUMBER = 18;
@@ -30,7 +31,7 @@ export const Pagination: React.FC<Props> = ({
           onClick={handleLeftButtonClick}
           disabled={currentPage === 1}
         >
-          {'<'}
+          <Icon icon="chevron-thin-left" className={styles.pagination__icon} />
         </button>
       </li>
 
@@ -53,7 +54,7 @@ export const Pagination: React.FC<Props> = ({
           onClick={handleRightButtonClick}
           disabled={currentPage === TOTAL_PAGES_NUMBER}
         >
-          {'>'}
+          <Icon icon="chevron-thin-right" className={styles.pagination__icon} />
         </button>
       </li>
     </ul>
