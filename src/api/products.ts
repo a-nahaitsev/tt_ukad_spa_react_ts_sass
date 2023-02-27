@@ -2,38 +2,40 @@ import { Image } from '../types/Image';
 import { Product } from '../types/Product';
 import { client } from '../utils/fetch';
 
-export const getProducts = async ({ query = '' }) => {
-  // const products = await client.get<Product[]>(
-  //   `/breeds?limit=10&page=${page - 1}`
-  // );
+const getImage = async (imageId: string) => {
+  const image = await client.get<Image>(`/images/${imageId}`);
 
-  let products = await client.get<Product[]>(`/breeds/search?q=${query}`);
-  products = products.filter(
-    (product) =>
-      product.hasOwnProperty('reference_image_id') &&
-      product.reference_image_id !== ''
-  );
+  return image;
+};
 
-  products = await Promise.all(
-    products.map(async (product) => {
-      const image = await client.get<Image>(
-        `/images/${product.reference_image_id}`
-      );
+export const getProducts = async ({ page = 1, query = '' }) => {
+  let products;
 
-      console.log(product, image);
+  if (!query) {
+    products = await client.get<Product[]>(`/breeds?limit=10&page=${page - 1}`);
+  } else {
+    products = await client.get<Product[]>(`/breeds/search?q=${query}`);
+    products = products.filter(
+      (product) =>
+        product.hasOwnProperty('reference_image_id') &&
+        product.reference_image_id !== ''
+    );
 
-      return { ...product, image };
-    })
-  );
+    products = await Promise.all(
+      products.map(async (product) => {
+        const image = await getImage(product.reference_image_id);
+
+        return { ...product, image };
+      })
+    );
+  }
 
   return products || null;
 };
 
 export const getProductById = async (productId: number) => {
   const product = await client.get<Product>(`/breeds/${productId}`);
-  const image = await client.get<Image>(
-    `/images/${product.reference_image_id}`
-  );
+  const image = await getImage(product.reference_image_id);
 
   product.image = image;
 

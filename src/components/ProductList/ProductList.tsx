@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Loader } from '../Loader';
 import { ProductCard } from '../ProductCard';
@@ -8,6 +8,7 @@ import { Pagination } from '../Pagination';
 import { useSearchParams } from 'react-router-dom';
 import { SearchBar } from '../SearchBar';
 import { SearchIconColor } from '../../types/SearchIconColor';
+import { debounce } from '../../utils/debounce';
 
 export const ProductList: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -18,12 +19,24 @@ export const ProductList: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(
     Number(searchParams.get('page')) || 1
   );
+  const [query, setQuery] = useState(searchParams.get('search') || '');
+  const [appliedQuery, setAppliedQuery] = useState(
+    searchParams.get('search') || ''
+  );
+  const applyQuery = useCallback(debounce(setAppliedQuery, 1000), []);
 
   useEffect(() => {
-    searchParams.set('page', String(currentPage));
-    setSearchParams(searchParams);
-    dispatch(fetchProducts({ page: currentPage, query: 'dog' }));
-  }, [currentPage]);
+    if (appliedQuery) {
+      searchParams.set('search', appliedQuery);
+      searchParams.delete('page');
+      setSearchParams(searchParams);
+    } else {
+      searchParams.set('page', String(currentPage));
+      setSearchParams(searchParams);
+    }
+
+    dispatch(fetchProducts({ page: currentPage, query: appliedQuery }));
+  }, [currentPage, appliedQuery]);
 
   return (
     <section className={styles.products}>
@@ -34,7 +47,12 @@ export const ProductList: React.FC = () => {
           <div className={styles.products__heading}>
             <h2 className={styles.products__title}>Product Page</h2>
 
-            <SearchBar searchIconColor={SearchIconColor.Gray} />
+            <SearchBar
+              query={query}
+              setQuery={setQuery}
+              applyQuery={applyQuery}
+              searchIconColor={SearchIconColor.Gray}
+            />
           </div>
 
           <ul className={styles.products__content}>

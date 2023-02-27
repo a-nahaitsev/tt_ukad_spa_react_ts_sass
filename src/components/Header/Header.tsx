@@ -3,8 +3,8 @@ import styles from './Header.module.scss';
 import logo from '../../assets/img/UKAD_logo.svg';
 import { Link, NavLink, useMatch } from 'react-router-dom';
 import classNames from 'classnames';
-import { SearchBar } from '../SearchBar';
-import { SearchIconColor } from '../../types/SearchIconColor';
+// import { SearchBar } from '../SearchBar';
+// import { SearchIconColor } from '../../types/SearchIconColor';
 
 const navLinks = [
   { id: 1, to: '/', text: 'Home' },
@@ -37,7 +37,7 @@ export const Header: React.FC = () => (
         </ul>
       </nav>
 
-      <SearchBar searchIconColor={SearchIconColor.White} />
+      {/* <SearchBar searchIconColor={SearchIconColor.White} /> */}
     </div>
   </header>
 );
