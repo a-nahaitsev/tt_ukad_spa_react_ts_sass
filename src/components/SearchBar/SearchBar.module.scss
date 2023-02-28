@@ -18,11 +18,11 @@
     transform: translate(0, -50%);
 
     &-white {
-      color: #fff;
+      color: $color-white;
     }
 
     &-gray {
-      color: #757575;
+      color: $color-icon;
     }
   }
 

@@ -4,17 +4,16 @@ import { getPages } from '../../utils/getPages';
 import Icon from '../Icon/Icon';
 import styles from './Pagination.module.scss';
 
-const TOTAL_PAGES_NUMBER = 18;
-
 type Props = {
-  currentPage: number;
-  setCurrentPage: (prevValue: number) => void;
+  properties: {
+    totalPagesNumber: number;
+    currentPage: number;
+    setCurrentPage: (prevValue: number) => void;
+  };
 };
 
-export const Pagination: React.FC<Props> = ({
-  currentPage,
-  setCurrentPage,
-}) => {
+export const Pagination: React.FC<Props> = ({ properties }) => {
+  const { totalPagesNumber, currentPage, setCurrentPage } = properties;
   const handleLeftButtonClick = () => {
     setCurrentPage(currentPage - 1);
   };
@@ -35,7 +34,7 @@ export const Pagination: React.FC<Props> = ({
         </button>
       </li>
 
-      {getPages(TOTAL_PAGES_NUMBER).map((page, index) => (
+      {getPages(totalPagesNumber).map((page, index) => (
         <li className={styles.pagination__item} key={index}>
           <button
             className={classNames(styles.pagination__button, {
@@ -52,7 +51,7 @@ export const Pagination: React.FC<Props> = ({
         <button
           className={styles.pagination__button}
           onClick={handleRightButtonClick}
-          disabled={currentPage === TOTAL_PAGES_NUMBER}
+          disabled={currentPage === totalPagesNumber}
         >
           <Icon icon="chevron-thin-right" className={styles.pagination__icon} />
         </button>
