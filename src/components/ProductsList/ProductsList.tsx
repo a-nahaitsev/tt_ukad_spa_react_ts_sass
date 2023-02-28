@@ -3,14 +3,12 @@ import { useAppSelector } from '../../app/hooks';
 import { ProductCard } from '../ProductCard';
 import styles from './ProductsList.module.scss';
 
-type Props = {
-  currentSearchPage: number;
-};
-
 const ITEMS_PER_PAGE = 10;
 
-export const ProductsList: React.FC<Props> = ({ currentSearchPage }) => {
-  const { appliedQuery } = useAppSelector((state) => state.query);
+export const ProductsList: React.FC = () => {
+  const { appliedQuery, currentSearchPage } = useAppSelector(
+    (state) => state.query
+  );
   const { products } = useAppSelector((state) => state.products);
 
   const visibleProducts = appliedQuery

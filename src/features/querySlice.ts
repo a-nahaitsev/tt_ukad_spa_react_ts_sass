@@ -5,6 +5,7 @@ type QueryState = {
   headerQuery: string;
   productsQuery: string;
   currentPage: number;
+  currentSearchPage: number;
 };
 
 const initialState: QueryState = {
@@ -12,6 +13,7 @@ const initialState: QueryState = {
   headerQuery: '',
   productsQuery: '',
   currentPage: 1,
+  currentSearchPage: 1,
 };
 
 export const QuerySlice = createSlice({
@@ -21,6 +23,7 @@ export const QuerySlice = createSlice({
     setAppliedQuery: (state, action: PayloadAction<string>) => ({
       ...state,
       appliedQuery: action.payload,
+      currentSearchPage: 1,
     }),
     setHeaderQuery: (state, action: PayloadAction<string>) => ({
       ...state,
@@ -35,6 +38,11 @@ export const QuerySlice = createSlice({
     setCurrentPage: (state, action: PayloadAction<number>) => ({
       ...state,
       currentPage: action.payload,
+      currentSearchPage: 1,
+    }),
+    setCurrentSearchPage: (state, action: PayloadAction<number>) => ({
+      ...state,
+      currentSearchPage: action.payload,
     }),
   },
 });
@@ -44,5 +52,6 @@ export const {
   setHeaderQuery,
   setProductsQuery,
   setCurrentPage,
+  setCurrentSearchPage,
 } = QuerySlice.actions;
 export default QuerySlice.reducer;

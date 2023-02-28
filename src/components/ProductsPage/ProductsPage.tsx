@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Loader } from '../Loader';
 import styles from './ProductsPage.module.scss';
@@ -11,6 +11,7 @@ import { debounce } from '../../utils/debounce';
 import {
   setAppliedQuery,
   setCurrentPage,
+  setCurrentSearchPage,
   setProductsQuery,
 } from '../../features/querySlice';
 import { ProductsList } from '../ProductsList';
@@ -22,10 +23,8 @@ export const ProductsPage: React.FC = () => {
   const { products, isLoading, error } = useAppSelector(
     (state) => state.products
   );
-  const { appliedQuery, productsQuery, currentPage } = useAppSelector(
-    (state) => state.query
-  );
-  const [currentSearchPage, setCurrentSearchPage] = useState(1);
+  const { appliedQuery, productsQuery, currentPage, currentSearchPage } =
+    useAppSelector((state) => state.query);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const setQueryInProducts = (value: string) =>
@@ -37,7 +36,8 @@ export const ProductsPage: React.FC = () => {
     ? {
         totalPagesNumber: Math.ceil(products.length / 10),
         currentPage: currentSearchPage,
-        setCurrentPage: setCurrentSearchPage,
+        setCurrentPage: (value: number) =>
+          dispatch(setCurrentSearchPage(value)),
       }
     : {
         totalPagesNumber: TOTAL_PAGES_NUMBER,
@@ -48,7 +48,7 @@ export const ProductsPage: React.FC = () => {
   useEffect(() => {
     if (appliedQuery) {
       searchParams.set('search', appliedQuery);
-      searchParams.delete('page');
+      searchParams.set('page', String(currentSearchPage));
 
       dispatch(setCurrentPage(1));
       setSearchParams(searchParams);
@@ -56,7 +56,6 @@ export const ProductsPage: React.FC = () => {
       searchParams.set('page', String(currentPage));
       searchParams.delete('search');
 
-      setCurrentSearchPage(1);
       setSearchParams(searchParams);
     }
 
@@ -80,7 +79,7 @@ export const ProductsPage: React.FC = () => {
             />
           </div>
 
-          <ProductsList currentSearchPage={currentSearchPage} />
+          <ProductsList />
 
           <Pagination properties={paginationProps} />
         </>

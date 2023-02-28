@@ -31,11 +31,9 @@ export const SearchBar: React.FC<Props> = ({
   };
 
   const onHandleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    console.log('submit', applyQuery);
     event.preventDefault();
 
     if (!applyQuery) {
-      console.log('settter works', query);
       dispatch(setAppliedQuery(query));
       navigate('/products');
     }
