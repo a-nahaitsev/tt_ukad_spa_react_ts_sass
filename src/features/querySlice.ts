@@ -22,7 +22,7 @@ export const QuerySlice = createSlice({
   reducers: {
     setAppliedQuery: (state, action: PayloadAction<string>) => ({
       ...state,
-      appliedQuery: action.payload,
+      appliedQuery: action.payload.trim(),
       currentSearchPage: 1,
     }),
     setHeaderQuery: (state, action: PayloadAction<string>) => ({

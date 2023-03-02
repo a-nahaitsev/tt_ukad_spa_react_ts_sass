@@ -47,8 +47,8 @@ export const ProductsPage: React.FC = () => {
 
   useEffect(() => {
     if (appliedQuery) {
-      searchParams.set('search', appliedQuery);
       searchParams.set('page', String(currentSearchPage));
+      searchParams.set('search', appliedQuery);
 
       dispatch(setCurrentPage(1));
       setSearchParams(searchParams);
@@ -61,6 +61,15 @@ export const ProductsPage: React.FC = () => {
 
     dispatch(fetchProducts({ page: currentPage, query: appliedQuery }));
   }, [currentPage, appliedQuery]);
+
+  useEffect(() => {
+    if (appliedQuery) {
+      searchParams.set('page', String(currentSearchPage));
+      searchParams.set('search', appliedQuery);
+
+      setSearchParams(searchParams);
+    }
+  }, [currentSearchPage]);
 
   return (
     <section className={styles.products}>
