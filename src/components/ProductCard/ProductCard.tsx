@@ -1,5 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../app/hooks';
+import {
+  setAppliedQuery,
+  setCurrentPage,
+  setCurrentSearchPage,
+  setQuery,
+} from '../../features/querySlice';
 import styles from './ProductCard.module.scss';
 
 type Props = {
@@ -14,18 +21,28 @@ export const ProductCard: React.FC<Props> = ({
   imageUrl,
   category,
   title,
-}) => (
-  <article className={styles.product}>
-    <Link to={`/products/${id}`}>
-      <div className={styles['product__image-container']}>
-        <img className={styles.product__image} src={imageUrl} alt={title} />
-      </div>
+}) => {
+  const dispatch = useAppDispatch();
+  const setDefaultQueries = () => {
+    dispatch(setAppliedQuery(''));
+    dispatch(setQuery(''));
+    dispatch(setCurrentPage(1));
+    dispatch(setCurrentSearchPage(1));
+  };
 
-      <div className={styles.product__description}>
-        <span className={styles.product__category}>{category}</span>
+  return (
+    <article className={styles.product}>
+      <Link to={`/products/${id}`} onClick={setDefaultQueries}>
+        <div className={styles['product__image-container']}>
+          <img className={styles.product__image} src={imageUrl} alt={title} />
+        </div>
 
-        <h3 className={styles.product__title}>{title}</h3>
-      </div>
-    </Link>
-  </article>
-);
+        <div className={styles.product__description}>
+          <span className={styles.product__category}>{category}</span>
+
+          <h3 className={styles.product__title}>{title}</h3>
+        </div>
+      </Link>
+    </article>
+  );
+};

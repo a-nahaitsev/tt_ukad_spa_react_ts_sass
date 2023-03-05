@@ -1,31 +1,27 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../app/hooks';
-import { setAppliedQuery } from '../../features/querySlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { setAppliedQuery, setQuery } from '../../features/querySlice';
 import { SearchIconColor } from '../../types/SearchIconColor';
+import { debounce } from '../../utils/debounce';
 import Icon from '../Icon/Icon';
 import styles from './SearchBar.module.scss';
 
 type Props = {
-  query: string;
-  setQuery: (value: string) => void;
-  applyQuery?: (value: string) => void;
   searchIconColor: SearchIconColor;
 };
 
-export const SearchBar: React.FC<Props> = ({
-  query,
-  setQuery,
-  applyQuery,
-  searchIconColor,
-}) => {
+export const SearchBar: React.FC<Props> = ({ searchIconColor }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { query } = useAppSelector((state) => state.query);
+  const setQueryToApply = (value: string) => dispatch(setAppliedQuery(value));
+  const applyQuery = useCallback(debounce(setQueryToApply, 1000), []);
   const onHandleQueryInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
+    dispatch(setQuery(event.target.value));
 
-    if (applyQuery) {
+    if (searchIconColor === 'gray') {
       applyQuery(event.target.value);
     }
   };
@@ -33,9 +29,12 @@ export const SearchBar: React.FC<Props> = ({
   const onHandleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!applyQuery) {
+    if (searchIconColor === 'white') {
       dispatch(setAppliedQuery(query));
-      navigate('/products');
+      navigate({
+        pathname: '/products',
+        search: `?page=1&search=${query}`,
+      });
     }
   };
 

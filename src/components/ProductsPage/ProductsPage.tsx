@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Loader } from '../Loader';
 import styles from './ProductsPage.module.scss';
@@ -7,12 +7,9 @@ import { Pagination } from '../Pagination';
 import { useSearchParams } from 'react-router-dom';
 import { SearchBar } from '../SearchBar';
 import { SearchIconColor } from '../../types/SearchIconColor';
-import { debounce } from '../../utils/debounce';
 import {
-  setAppliedQuery,
   setCurrentPage,
   setCurrentSearchPage,
-  setProductsQuery,
 } from '../../features/querySlice';
 import { ProductsList } from '../ProductsList';
 
@@ -23,14 +20,13 @@ export const ProductsPage: React.FC = () => {
   const { products, isLoading, error } = useAppSelector(
     (state) => state.products
   );
-  const { appliedQuery, productsQuery, currentPage, currentSearchPage } =
-    useAppSelector((state) => state.query);
+  const { appliedQuery, currentSearchPage, currentPage } = useAppSelector(
+    (state) => state.query
+  );
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const setQueryInProducts = (value: string) =>
-    dispatch(setProductsQuery(value));
-  const setQueryToApply = (value: string) => dispatch(setAppliedQuery(value));
-  const applyQuery = useCallback(debounce(setQueryToApply, 1000), []);
+  const [pageFromUrl] = useState(Number(searchParams.get('page')) || 1);
+  const [queryFromUrl] = useState(searchParams.get('search') || '');
 
   const paginationProps = appliedQuery
     ? {
@@ -46,21 +42,31 @@ export const ProductsPage: React.FC = () => {
       };
 
   useEffect(() => {
+    console.log(pageFromUrl, queryFromUrl);
     if (appliedQuery) {
       searchParams.set('page', String(currentSearchPage));
       searchParams.set('search', appliedQuery);
-
-      dispatch(setCurrentPage(1));
       setSearchParams(searchParams);
+
+      dispatch(fetchProducts({ query: appliedQuery }));
     } else {
       searchParams.set('page', String(currentPage));
       searchParams.delete('search');
-
       setSearchParams(searchParams);
-    }
 
-    dispatch(fetchProducts({ page: currentPage, query: appliedQuery }));
-  }, [currentPage, appliedQuery]);
+      dispatch(fetchProducts({ page: currentPage }));
+    }
+  }, [appliedQuery]);
+
+  useEffect(() => {
+    if (!appliedQuery) {
+      searchParams.set('page', String(currentPage));
+      searchParams.delete('search');
+      setSearchParams(searchParams);
+
+      dispatch(fetchProducts({ page: currentPage }));
+    }
+  }, [currentPage]);
 
   useEffect(() => {
     if (appliedQuery) {
@@ -80,12 +86,7 @@ export const ProductsPage: React.FC = () => {
           <div className={styles.products__heading}>
             <h2 className={styles.products__title}>Product Page</h2>
 
-            <SearchBar
-              query={productsQuery}
-              setQuery={setQueryInProducts}
-              applyQuery={applyQuery}
-              searchIconColor={SearchIconColor.Gray}
-            />
+            <SearchBar searchIconColor={SearchIconColor.Gray} />
           </div>
 
           <ProductsList />

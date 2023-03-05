@@ -1,15 +1,16 @@
 import React from 'react';
 import styles from './Header.module.scss';
 import logo from '../../assets/img/UKAD_logo.svg';
-import { Link, NavLink, useMatch } from 'react-router-dom';
+import { Link, NavLink, useLocation, useMatch } from 'react-router-dom';
 import classNames from 'classnames';
 import { SearchBar } from '../SearchBar';
 import { SearchIconColor } from '../../types/SearchIconColor';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch } from '../../app/hooks';
 import {
   setAppliedQuery,
-  setHeaderQuery,
-  setProductsQuery,
+  setCurrentPage,
+  setCurrentSearchPage,
+  setQuery,
 } from '../../features/querySlice';
 
 const navLinks = [
@@ -19,13 +20,14 @@ const navLinks = [
 
 export const Header: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { headerQuery } = useAppSelector((state) => state.query);
-  const setQuery = (newQuery: string) => dispatch(setHeaderQuery(newQuery));
   const setDefaultQueries = () => {
     dispatch(setAppliedQuery(''));
-    dispatch(setHeaderQuery(''));
-    dispatch(setProductsQuery(''));
+    dispatch(setQuery(''));
+    dispatch(setCurrentPage(1));
+    dispatch(setCurrentSearchPage(1));
   };
+  const location = useLocation();
+  const isSearchBarShowed = location.pathname !== '/products';
 
   return (
     <header className={styles.header}>
@@ -55,11 +57,9 @@ export const Header: React.FC = () => {
           </ul>
         </nav>
 
-        <SearchBar
-          query={headerQuery}
-          setQuery={setQuery}
-          searchIconColor={SearchIconColor.White}
-        />
+        {isSearchBarShowed && (
+          <SearchBar searchIconColor={SearchIconColor.White} />
+        )}
       </div>
     </header>
   );

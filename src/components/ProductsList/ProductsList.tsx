@@ -6,12 +6,10 @@ import styles from './ProductsList.module.scss';
 const ITEMS_PER_PAGE = 10;
 
 export const ProductsList: React.FC = () => {
-  const { appliedQuery, currentSearchPage } = useAppSelector(
-    (state) => state.query
-  );
+  const { query, currentSearchPage } = useAppSelector((state) => state.query);
   const { products } = useAppSelector((state) => state.products);
 
-  const visibleProducts = appliedQuery
+  const visibleProducts = query
     ? products.slice(
         currentSearchPage * ITEMS_PER_PAGE - ITEMS_PER_PAGE,
         currentSearchPage * ITEMS_PER_PAGE
