@@ -1,12 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
-import {
-  setAppliedQuery,
-  setCurrentPage,
-  setCurrentSearchPage,
-  setQuery,
-} from '../../features/querySlice';
+import { setQuery } from '../../features/querySlice';
 import styles from './ProductCard.module.scss';
 
 type Props = {
@@ -23,16 +18,11 @@ export const ProductCard: React.FC<Props> = ({
   title,
 }) => {
   const dispatch = useAppDispatch();
-  const setDefaultQueries = () => {
-    dispatch(setAppliedQuery(''));
-    dispatch(setQuery(''));
-    dispatch(setCurrentPage(1));
-    dispatch(setCurrentSearchPage(1));
-  };
+  const setDefaultQuery = () => dispatch(setQuery(''));
 
   return (
     <article className={styles.product}>
-      <Link to={`/products/${id}`} onClick={setDefaultQueries}>
+      <Link to={`/products/${id}`} onClick={setDefaultQuery}>
         <div className={styles['product__image-container']}>
           <img className={styles.product__image} src={imageUrl} alt={title} />
         </div>

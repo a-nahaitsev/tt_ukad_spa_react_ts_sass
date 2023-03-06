@@ -14,46 +14,11 @@ export const getProducts = async ({ page = 1, query = '' }) => {
   if (!query) {
     products = await client.get<Product[]>(`/breeds?limit=10&page=${page - 1}`);
   } else {
-    products = await client.get<Product[]>(`/breeds`);
-    const foundProducts = await client.get<Product[]>(
-      `/breeds/search?q=${query}`
-    );
-    const foundProductsIds = foundProducts.map((product) => product.id);
-
-    products = products.filter((product) =>
-      foundProductsIds.includes(product.id)
-    );
+    products = await client.get<Product[]>(`/breeds/search?q=${query}`);
   }
 
   return products || null;
 };
-
-// === VERSION WITH HTTP 429 ERROR (TOO MANY REQUESTS) ===
-
-// export const getProducts = async ({ page = 1, query = '' }) => {
-//   let products;
-
-//   if (!query) {
-//     products = await client.get<Product[]>(`/breeds?limit=10&page=${page - 1}`);
-//   } else {
-//     products = await client.get<Product[]>(`/breeds/search?q=${query}`);
-//     products = products.filter(
-//       (product) =>
-//         product.hasOwnProperty('reference_image_id') &&
-//         product.reference_image_id !== ''
-//     );
-
-//     products = await Promise.all(
-//       products.map(async (product) => {
-//         const image = await getImage(product.reference_image_id);
-
-//         return { ...product, image };
-//       })
-//     );
-//   }
-
-//   return products || null;
-// };
 
 export const getProductById = async (productId: number) => {
   const product = await client.get<Product>(`/breeds/${productId}`);

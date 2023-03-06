@@ -1,22 +1,38 @@
 import classNames from 'classnames';
 import React, { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { setAppliedQuery, setQuery } from '../../features/querySlice';
+import { setQuery } from '../../features/querySlice';
 import { SearchIconColor } from '../../types/SearchIconColor';
 import { debounce } from '../../utils/debounce';
 import Icon from '../Icon/Icon';
 import styles from './SearchBar.module.scss';
 
 type Props = {
+  setPage?: (value: number) => void;
+  setQueryFromUrl?: (value: string) => void;
   searchIconColor: SearchIconColor;
 };
 
-export const SearchBar: React.FC<Props> = ({ searchIconColor }) => {
+export const SearchBar: React.FC<Props> = ({
+  setPage,
+  setQueryFromUrl,
+  searchIconColor,
+}) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { query } = useAppSelector((state) => state.query);
-  const setQueryToApply = (value: string) => dispatch(setAppliedQuery(value));
+  const setQueryToApply = (value: string) => {
+    if (setQueryFromUrl && setPage) {
+      setPage(1);
+      setQueryFromUrl(value);
+      dispatch(setQuery(value));
+      searchParams.set('page', String(1));
+      searchParams.set('search', String(value));
+      setSearchParams(searchParams);
+    }
+  };
   const applyQuery = useCallback(debounce(setQueryToApply, 1000), []);
   const onHandleQueryInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setQuery(event.target.value));
@@ -30,7 +46,6 @@ export const SearchBar: React.FC<Props> = ({ searchIconColor }) => {
     event.preventDefault();
 
     if (searchIconColor === 'white') {
-      dispatch(setAppliedQuery(query));
       navigate({
         pathname: '/products',
         search: `?page=1&search=${query}`,

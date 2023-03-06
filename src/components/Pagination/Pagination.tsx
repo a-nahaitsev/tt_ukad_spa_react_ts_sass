@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { getPages } from '../../utils/getPages';
 import Icon from '../Icon/Icon';
 import styles from './Pagination.module.scss';
@@ -13,6 +14,7 @@ type Props = {
 };
 
 export const Pagination: React.FC<Props> = ({ properties }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const { totalPagesNumber, currentPage, setCurrentPage } = properties;
   const handleLeftButtonClick = () => {
     setCurrentPage(currentPage - 1);
@@ -40,7 +42,15 @@ export const Pagination: React.FC<Props> = ({ properties }) => {
             className={classNames(styles.pagination__button, {
               [styles['pagination__button--active']]: page === currentPage,
             })}
-            onClick={() => setCurrentPage(page)}
+            onClick={() => {
+              setCurrentPage(page);
+              searchParams.set('page', String(page));
+              setSearchParams(searchParams);
+              window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+              });
+            }}
           >
             {page}
           </button>

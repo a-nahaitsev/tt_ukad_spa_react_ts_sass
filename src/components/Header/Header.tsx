@@ -6,25 +6,12 @@ import classNames from 'classnames';
 import { SearchBar } from '../SearchBar';
 import { SearchIconColor } from '../../types/SearchIconColor';
 import { useAppDispatch } from '../../app/hooks';
-import {
-  setAppliedQuery,
-  setCurrentPage,
-  setCurrentSearchPage,
-  setQuery,
-} from '../../features/querySlice';
-
-const navLinks = [
-  { id: 1, to: '/', text: 'Home' },
-  { id: 2, to: '/products', text: 'Products' },
-];
+import { setQuery } from '../../features/querySlice';
 
 export const Header: React.FC = () => {
   const dispatch = useAppDispatch();
-  const setDefaultQueries = () => {
-    dispatch(setAppliedQuery(''));
+  const setDefaultQuery = () => {
     dispatch(setQuery(''));
-    dispatch(setCurrentPage(1));
-    dispatch(setCurrentSearchPage(1));
   };
   const location = useLocation();
   const isSearchBarShowed = location.pathname !== '/products';
@@ -38,22 +25,33 @@ export const Header: React.FC = () => {
           </Link>
 
           <ul className={styles.header__menu}>
-            {navLinks.map(({ id, to, text }) => (
-              <li className={styles.header__item} key={id}>
-                <NavLink
-                  className={({ isActive }) =>
-                    classNames(styles.header__link, {
-                      [styles['header__link--active']]:
-                        useMatch(to) && isActive,
-                    })
-                  }
-                  to={to}
-                  onClick={setDefaultQueries}
-                >
-                  {text}
-                </NavLink>
-              </li>
-            ))}
+            <li className={styles.header__item}>
+              <NavLink
+                className={({ isActive }) =>
+                  classNames(styles.header__link, {
+                    [styles['header__link--active']]: useMatch('/') && isActive,
+                  })
+                }
+                to={'/'}
+                onClick={setDefaultQuery}
+              >
+                Home
+              </NavLink>
+            </li>
+
+            <li className={styles.header__item}>
+              <NavLink
+                className={({ isActive }) =>
+                  classNames(styles.header__link, {
+                    [styles['header__link--active']]:
+                      useMatch('/products') && isActive,
+                  })
+                }
+                to={'/products'}
+              >
+                Products
+              </NavLink>
+            </li>
           </ul>
         </nav>
 

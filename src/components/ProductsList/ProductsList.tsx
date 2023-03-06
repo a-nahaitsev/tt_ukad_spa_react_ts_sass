@@ -1,9 +1,8 @@
 import React from 'react';
 import { useAppSelector } from '../../app/hooks';
+import { ITEMS_PER_PAGE, PLACEHOLDER_URL } from '../../constants/constants';
 import { ProductCard } from '../ProductCard';
 import styles from './ProductsList.module.scss';
-
-const ITEMS_PER_PAGE = 10;
 
 export const ProductsList: React.FC = () => {
   const { query, currentSearchPage } = useAppSelector((state) => state.query);
@@ -25,7 +24,7 @@ export const ProductsList: React.FC = () => {
           <div className={styles['products-list__product']} key={id}>
             <ProductCard
               id={id}
-              imageUrl={image.url}
+              imageUrl={image ? image.url : PLACEHOLDER_URL}
               category={breed_group || 'Unknown breed'}
               title={name}
             />

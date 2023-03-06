@@ -6,8 +6,7 @@
   flex: 1;
 
   &__wrapper {
-    @extend %flex-vertical-centering;
+    @extend %flex-horizontal-centering;
     width: $width-container;
-    justify-content: center;
   }
 }
