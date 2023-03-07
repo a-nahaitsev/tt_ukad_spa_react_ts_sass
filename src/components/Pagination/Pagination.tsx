@@ -1,28 +1,42 @@
 import classNames from 'classnames';
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useAppSelector } from '../../app/hooks';
 import { getPages } from '../../utils/getPages';
 import { scrollUp } from '../../utils/scrollUp';
 import Icon from '../Icon/Icon';
 import styles from './Pagination.module.scss';
 
+const TOTAL_PAGES_NUMBER = 18;
+
 type Props = {
-  properties: {
-    totalPagesNumber: number;
-    currentPage: number;
-    setCurrentPage: (prevValue: number) => void;
-  };
+  isSearchedProducts: boolean;
+  currentPage: number;
+  setCurrentPage: (prevValue: number) => void;
 };
 
-export const Pagination: React.FC<Props> = ({ properties }) => {
+export const Pagination: React.FC<Props> = ({
+  isSearchedProducts,
+  currentPage,
+  setCurrentPage,
+}) => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { totalPagesNumber, currentPage, setCurrentPage } = properties;
+  const { products } = useAppSelector((state) => state.products);
+
+  const totalPagesNumber = isSearchedProducts
+    ? Math.ceil(products.length / 10)
+    : TOTAL_PAGES_NUMBER;
 
   const onPaginationClick = (page: number) => {
-    scrollUp();
     setCurrentPage(page);
     searchParams.set('page', String(page));
     setSearchParams(searchParams);
+    if (isSearchedProducts) {
+      scrollUp();
+    } else {
+      navigate(0);
+    }
   };
 
   return (

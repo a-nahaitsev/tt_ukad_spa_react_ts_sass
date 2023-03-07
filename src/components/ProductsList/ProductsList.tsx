@@ -4,18 +4,22 @@ import { ITEMS_PER_PAGE, PLACEHOLDER_URL } from '../../constants/constants';
 import { ProductCard } from '../ProductCard';
 import styles from './ProductsList.module.scss';
 
-export const ProductsList: React.FC = () => {
-  const { query, currentSearchPage } = useAppSelector((state) => state.query);
+type Props = {
+  isSearchedProducts: boolean;
+  page: number;
+};
+
+export const ProductsList: React.FC<Props> = ({ isSearchedProducts, page }) => {
   const { products } = useAppSelector((state) => state.products);
 
   const visibleProducts = useMemo(() => {
-    return query
+    return isSearchedProducts
       ? products.slice(
-          currentSearchPage * ITEMS_PER_PAGE - ITEMS_PER_PAGE,
-          currentSearchPage * ITEMS_PER_PAGE
+          page * ITEMS_PER_PAGE - ITEMS_PER_PAGE,
+          page * ITEMS_PER_PAGE
         )
       : products;
-  }, [currentSearchPage]);
+  }, [page]);
 
   return (
     <ul className={styles['products-list']}>

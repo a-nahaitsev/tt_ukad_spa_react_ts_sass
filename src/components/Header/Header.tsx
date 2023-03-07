@@ -1,20 +1,34 @@
 import React from 'react';
 import styles from './Header.module.scss';
 import logo from '../../assets/img/UKAD_logo.svg';
-import { Link, NavLink, useLocation, useMatch } from 'react-router-dom';
+import {
+  Link,
+  NavLink,
+  useLocation,
+  useMatch,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 import classNames from 'classnames';
-import { SearchBar } from '../SearchBar';
-import { SearchIconColor } from '../../types/SearchIconColor';
-import { useAppDispatch } from '../../app/hooks';
-import { setQuery } from '../../features/querySlice';
+import { SearchForm } from '../SearchForm';
 
 export const Header: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const setDefaultQuery = () => {
-    dispatch(setQuery(''));
-  };
   const location = useLocation();
-  const isSearchBarShowed = location.pathname !== '/products';
+  const isProductsPage = location.pathname === '/products';
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const moveOnDeafultProducts = () => {
+    if (
+      isProductsPage &&
+      !(searchParams.get('page') !== '1') &&
+      !(searchParams.get('search') !== '')
+    ) {
+      searchParams.set('page', '1');
+      searchParams.delete('search');
+      setSearchParams(searchParams);
+      navigate(0);
+    }
+  };
 
   return (
     <header className={styles.header}>
@@ -33,7 +47,6 @@ export const Header: React.FC = () => {
                   })
                 }
                 to={'/'}
-                onClick={setDefaultQuery}
               >
                 Home
               </NavLink>
@@ -48,6 +61,7 @@ export const Header: React.FC = () => {
                   })
                 }
                 to={'/products'}
+                onClick={moveOnDeafultProducts}
               >
                 Products
               </NavLink>
@@ -55,9 +69,7 @@ export const Header: React.FC = () => {
           </ul>
         </nav>
 
-        {isSearchBarShowed && (
-          <SearchBar searchIconColor={SearchIconColor.White} />
-        )}
+        {!isProductsPage && <SearchForm />}
       </div>
     </header>
   );

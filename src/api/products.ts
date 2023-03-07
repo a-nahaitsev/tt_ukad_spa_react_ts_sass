@@ -22,7 +22,6 @@ export const getProducts = async ({ page = 1, query = '' }) => {
 
 export const getProductById = async (productId: number) => {
   const product = await client.get<Product>(`/breeds/${productId}`);
-  console.log(product);
 
   if (product?.reference_image_id) {
     const image = await getImage(product.reference_image_id);
