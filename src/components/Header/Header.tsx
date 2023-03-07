@@ -1,34 +1,13 @@
 import React from 'react';
 import styles from './Header.module.scss';
 import logo from '../../assets/img/UKAD_logo.svg';
-import {
-  Link,
-  NavLink,
-  useLocation,
-  useMatch,
-  useNavigate,
-  useSearchParams,
-} from 'react-router-dom';
+import { Link, NavLink, useLocation, useMatch } from 'react-router-dom';
 import classNames from 'classnames';
 import { SearchForm } from '../SearchForm';
 
 export const Header: React.FC = () => {
   const location = useLocation();
   const isProductsPage = location.pathname === '/products';
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const moveOnDeafultProducts = () => {
-    if (
-      isProductsPage &&
-      !(searchParams.get('page') !== '1') &&
-      !(searchParams.get('search') !== '')
-    ) {
-      searchParams.set('page', '1');
-      searchParams.delete('search');
-      setSearchParams(searchParams);
-      navigate(0);
-    }
-  };
 
   return (
     <header className={styles.header}>
@@ -61,7 +40,6 @@ export const Header: React.FC = () => {
                   })
                 }
                 to={'/products'}
-                onClick={moveOnDeafultProducts}
               >
                 Products
               </NavLink>

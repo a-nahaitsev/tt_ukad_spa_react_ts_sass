@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import { getPages } from '../../utils/getPages';
@@ -24,9 +24,11 @@ export const Pagination: React.FC<Props> = ({
   const [searchParams, setSearchParams] = useSearchParams();
   const { products } = useAppSelector((state) => state.products);
 
-  const totalPagesNumber = isSearchedProducts
-    ? Math.ceil(products.length / 10)
-    : TOTAL_PAGES_NUMBER;
+  const totalPagesNumber = useMemo(() => {
+    return isSearchedProducts
+      ? Math.ceil(products.length / 10)
+      : TOTAL_PAGES_NUMBER;
+  }, [products]);
 
   const onPaginationClick = (page: number) => {
     setCurrentPage(page);
