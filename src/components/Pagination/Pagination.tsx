@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getPages } from '../../utils/getPages';
+import { scrollUp } from '../../utils/scrollUp';
 import Icon from '../Icon/Icon';
 import styles from './Pagination.module.scss';
 
@@ -16,12 +17,12 @@ type Props = {
 export const Pagination: React.FC<Props> = ({ properties }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { totalPagesNumber, currentPage, setCurrentPage } = properties;
-  const handleLeftButtonClick = () => {
-    setCurrentPage(currentPage - 1);
-  };
 
-  const handleRightButtonClick = () => {
-    setCurrentPage(currentPage + 1);
+  const onPaginationClick = (page: number) => {
+    scrollUp();
+    setCurrentPage(page);
+    searchParams.set('page', String(page));
+    setSearchParams(searchParams);
   };
 
   return (
@@ -29,7 +30,7 @@ export const Pagination: React.FC<Props> = ({ properties }) => {
       <li className={styles.pagination__item}>
         <button
           className={styles.pagination__button}
-          onClick={handleLeftButtonClick}
+          onClick={() => onPaginationClick(currentPage - 1)}
           disabled={currentPage === 1}
         >
           <Icon icon="chevron-thin-left" className={styles.pagination__icon} />
@@ -42,15 +43,7 @@ export const Pagination: React.FC<Props> = ({ properties }) => {
             className={classNames(styles.pagination__button, {
               [styles['pagination__button--active']]: page === currentPage,
             })}
-            onClick={() => {
-              setCurrentPage(page);
-              searchParams.set('page', String(page));
-              setSearchParams(searchParams);
-              window.scrollTo({
-                top: 0,
-                behavior: 'smooth',
-              });
-            }}
+            onClick={() => onPaginationClick(page)}
           >
             {page}
           </button>
@@ -60,7 +53,7 @@ export const Pagination: React.FC<Props> = ({ properties }) => {
       <li className={styles.pagination__item}>
         <button
           className={styles.pagination__button}
-          onClick={handleRightButtonClick}
+          onClick={() => onPaginationClick(currentPage + 1)}
           disabled={currentPage === totalPagesNumber}
         >
           <Icon icon="chevron-thin-right" className={styles.pagination__icon} />

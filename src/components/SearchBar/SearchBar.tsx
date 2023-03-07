@@ -34,7 +34,7 @@ export const SearchBar: React.FC<Props> = ({
     }
   };
   const applyQuery = useCallback(debounce(setQueryToApply, 1000), []);
-  const onHandleQueryInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onQueryInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setQuery(event.target.value));
 
     if (searchIconColor === 'gray') {
@@ -42,7 +42,7 @@ export const SearchBar: React.FC<Props> = ({
     }
   };
 
-  const onHandleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (searchIconColor === 'white') {
@@ -54,7 +54,7 @@ export const SearchBar: React.FC<Props> = ({
   };
 
   return (
-    <form onSubmit={onHandleFormSubmit} className={styles.search}>
+    <form onSubmit={onFormSubmit} className={styles.search}>
       <label className={styles.search__container}>
         <Icon
           icon="search"
@@ -68,7 +68,7 @@ export const SearchBar: React.FC<Props> = ({
           className={styles.search__text}
           type="text"
           value={query}
-          onChange={onHandleQueryInput}
+          onChange={onQueryInput}
           placeholder="Search for products"
         />
       </label>

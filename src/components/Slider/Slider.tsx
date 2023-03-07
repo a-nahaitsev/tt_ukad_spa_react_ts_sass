@@ -50,7 +50,7 @@ export const Slider: React.FC = () => {
                 <SwiperSlide className={styles.slider__item} key={id}>
                   <ProductCard
                     id={id}
-                    imageUrl={image ? image.url : PLACEHOLDER_URL}
+                    imageUrl={image?.url ?? PLACEHOLDER_URL}
                     category={breed_group || 'No category'}
                     title={name}
                   />
