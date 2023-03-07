@@ -16,14 +16,14 @@ export const ProductsPage: React.FC = () => {
   );
 
   const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
-  const [queryFromUrl] = useState(searchParams.get('search') || '');
-  const isSearchedProducts = Boolean(queryFromUrl);
+  const initialQuery = searchParams.get('search') || '';
+  const isSearchedProducts = Boolean(initialQuery);
 
   useEffect(() => {
-    if (!queryFromUrl) {
+    if (!initialQuery) {
       dispatch(fetchProducts({ page }));
     } else {
-      dispatch(fetchProducts({ query: queryFromUrl }));
+      dispatch(fetchProducts({ query: initialQuery }));
     }
   }, []);
 
@@ -32,7 +32,7 @@ export const ProductsPage: React.FC = () => {
       <div className={styles.products__heading}>
         <h2 className={styles.products__title}>Product Page</h2>
 
-        <SearchBar queryFromUrl={queryFromUrl} />
+        <SearchBar initialQuery={initialQuery} />
       </div>
 
       {isLoading && <Loader />}
@@ -50,7 +50,7 @@ export const ProductsPage: React.FC = () => {
 
       {!isLoading && !error && !products.length && (
         <p className={styles.products__title}>
-          {`There are no products with this search word "${queryFromUrl}"`}
+          {`There are no products with this search word "${initialQuery}"`}
         </p>
       )}
 

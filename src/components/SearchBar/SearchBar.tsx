@@ -6,13 +6,13 @@ import Icon from '../Icon/Icon';
 import styles from './SearchBar.module.scss';
 
 type Props = {
-  queryFromUrl: string;
+  initialQuery: string;
 };
 
-export const SearchBar: React.FC<Props> = ({ queryFromUrl }) => {
+export const SearchBar: React.FC<Props> = ({ initialQuery }) => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [query, setQuery] = useState(queryFromUrl);
+  const [query, setQuery] = useState(initialQuery);
   const setQueryToApply = (value: string) => {
     searchParams.set('page', String(1));
 
