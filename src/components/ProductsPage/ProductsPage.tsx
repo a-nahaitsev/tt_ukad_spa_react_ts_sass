@@ -15,35 +15,39 @@ export const ProductsPage: React.FC = () => {
     (state) => state.products
   );
 
-  const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
+  const initialPage = Number(searchParams.get('page')) || 1;
   const initialQuery = searchParams.get('search') || '';
   const isSearchedProducts = Boolean(initialQuery);
+  const [query, setQuery] = useState(initialQuery);
 
   useEffect(() => {
     if (!initialQuery) {
-      dispatch(fetchProducts({ page }));
+      setQuery('');
+      dispatch(fetchProducts({ page: initialPage }));
     } else {
       dispatch(fetchProducts({ query: initialQuery }));
     }
-  }, []);
+  }, [initialQuery, initialPage]);
 
   return (
     <section className={styles.products}>
       <div className={styles.products__heading}>
         <h2 className={styles.products__title}>Product Page</h2>
 
-        <SearchBar initialQuery={initialQuery} />
+        <SearchBar query={query} setQuery={setQuery} />
       </div>
 
       {isLoading && <Loader />}
 
       {!isLoading && !error && products.length > 0 && (
         <>
-          <ProductsList isSearchedProducts={isSearchedProducts} page={page} />
+          <ProductsList
+            isSearchedProducts={isSearchedProducts}
+            page={initialPage}
+          />
           <Pagination
             isSearchedProducts={isSearchedProducts}
-            currentPage={page}
-            setCurrentPage={setPage}
+            initialPage={initialPage}
           />
         </>
       )}

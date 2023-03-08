@@ -1,18 +1,17 @@
 import classNames from 'classnames';
-import React, { useCallback, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import React, { useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { debounce } from '../../utils/debounce';
 import Icon from '../Icon/Icon';
 import styles from './SearchBar.module.scss';
 
 type Props = {
-  initialQuery: string;
+  query: string;
+  setQuery: (value: string) => void;
 };
 
-export const SearchBar: React.FC<Props> = ({ initialQuery }) => {
-  const navigate = useNavigate();
+export const SearchBar: React.FC<Props> = ({ query, setQuery }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [query, setQuery] = useState(initialQuery);
   const setQueryToApply = (value: string) => {
     searchParams.set('page', String(1));
 
@@ -23,7 +22,6 @@ export const SearchBar: React.FC<Props> = ({ initialQuery }) => {
     }
 
     setSearchParams(searchParams);
-    navigate(0);
   };
   const applyQuery = useCallback(debounce(setQueryToApply, 1000), []);
   const onQueryInput = (event: React.ChangeEvent<HTMLInputElement>) => {

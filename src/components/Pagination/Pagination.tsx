@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import React, { useMemo } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import React, { useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import { getPages } from '../../utils/getPages';
 import { scrollUp } from '../../utils/scrollUp';
@@ -11,16 +11,14 @@ const TOTAL_PAGES_NUMBER = 18;
 
 type Props = {
   isSearchedProducts: boolean;
-  currentPage: number;
-  setCurrentPage: (prevValue: number) => void;
+  initialPage: number;
 };
 
 export const Pagination: React.FC<Props> = ({
   isSearchedProducts,
-  currentPage,
-  setCurrentPage,
+  initialPage,
 }) => {
-  const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(initialPage);
   const [searchParams, setSearchParams] = useSearchParams();
   const { products } = useAppSelector((state) => state.products);
 
@@ -36,8 +34,6 @@ export const Pagination: React.FC<Props> = ({
     setSearchParams(searchParams);
     if (isSearchedProducts) {
       scrollUp();
-    } else {
-      navigate(0);
     }
   };
 
