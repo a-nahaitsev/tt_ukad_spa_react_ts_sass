@@ -14,7 +14,7 @@ export const ProductsPage: React.FC = () => {
   const { products, isLoading, error } = useAppSelector(
     (state) => state.products
   );
-
+  const [isQueryNew, setIsQueryNew] = useState(true);
   const initialPage = Number(searchParams.get('page')) || 1;
   const initialQuery = searchParams.get('search') || '';
   const isSearchedProducts = Boolean(initialQuery);
@@ -24,8 +24,11 @@ export const ProductsPage: React.FC = () => {
     if (!initialQuery) {
       setQuery('');
       dispatch(fetchProducts({ page: initialPage }));
-    } else {
+    }
+
+    if (initialQuery && isQueryNew) {
       dispatch(fetchProducts({ query: initialQuery }));
+      setIsQueryNew(false);
     }
   }, [initialQuery, initialPage]);
 
@@ -34,7 +37,11 @@ export const ProductsPage: React.FC = () => {
       <div className={styles.products__heading}>
         <h2 className={styles.products__title}>Product Page</h2>
 
-        <SearchBar query={query} setQuery={setQuery} />
+        <SearchBar
+          query={query}
+          setQuery={setQuery}
+          setIsQueryNew={setIsQueryNew}
+        />
       </div>
 
       {isLoading && <Loader />}
@@ -54,7 +61,11 @@ export const ProductsPage: React.FC = () => {
 
       {!isLoading && !error && !products.length && (
         <p className={styles.products__title}>
-          {`There are no products with this search word "${initialQuery}"`}
+          {'There are no products with your request:'}
+          <br />
+          {`Page number - "${initialPage}"`}
+          <br />
+          {`Search word - "${initialQuery}"`}
         </p>
       )}
 
