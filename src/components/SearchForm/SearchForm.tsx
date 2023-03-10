@@ -17,6 +17,9 @@ export const SearchForm: React.FC = () => {
     });
   };
 
+  const onQueryInput = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setQuery(event.target.value);
+
   return (
     <form onSubmit={onFormSubmit} className={styles['search-form']}>
       <label className={styles['search-form__container']}>
@@ -33,7 +36,7 @@ export const SearchForm: React.FC = () => {
           type="text"
           placeholder="Search for products"
           value={query}
-          onChange={(event) => setQuery(event.target.value)}
+          onChange={onQueryInput}
         />
       </label>
     </form>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Loader } from '../Loader';
 import styles from './ProductsPage.module.scss';
@@ -7,10 +7,11 @@ import { Pagination } from '../Pagination';
 import { useSearchParams } from 'react-router-dom';
 import { SearchBar } from '../SearchBar';
 import { ProductsList } from '../ProductsList';
+import { debounce } from '../../utils/debounce';
 
 export const ProductsPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { products, isLoading, error } = useAppSelector(
     (state) => state.products
   );
@@ -19,6 +20,24 @@ export const ProductsPage: React.FC = () => {
   const initialQuery = searchParams.get('search') || '';
   const isSearchedProducts = Boolean(initialQuery);
   const [query, setQuery] = useState(initialQuery);
+
+  const setQueryToApply = (value: string) => {
+    searchParams.set('page', String(1));
+
+    if (!value) {
+      searchParams.delete('search');
+    } else {
+      searchParams.set('search', String(value));
+    }
+
+    setIsQueryNew(true);
+    setSearchParams(searchParams);
+  };
+  const applyQuery = useCallback(debounce(setQueryToApply, 1000), []);
+  const changeQuery = (value: string) => {
+    setQuery(value);
+    applyQuery(value);
+  };
 
   useEffect(() => {
     if (!initialQuery) {
@@ -37,11 +56,7 @@ export const ProductsPage: React.FC = () => {
       <div className={styles.products__heading}>
         <h2 className={styles.products__title}>Product Page</h2>
 
-        <SearchBar
-          query={query}
-          setQuery={setQuery}
-          setIsQueryNew={setIsQueryNew}
-        />
+        <SearchBar query={query} changeQuery={changeQuery} />
       </div>
 
       {isLoading && <Loader />}
