@@ -22,7 +22,6 @@
     width: 60px;
     height: 60px;
     border: 2px solid $color-border-card;
-    border-radius: 50%;
     font-weight: 700;
     font-size: 19px;
     line-height: 24px;
@@ -40,6 +39,18 @@
 
     &--active {
       border-color: $color-text-pagination;
+    }
+
+    &_round {
+      border-radius: 50%;
+    }
+
+    &_square {
+      border-radius: 0%;
+    }
+
+    &_background {
+      background-color: rgba(35, 35, 35, 0.1);
     }
   }
 
