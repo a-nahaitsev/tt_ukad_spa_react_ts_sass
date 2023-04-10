@@ -27,6 +27,12 @@ To see:
 3. Open the terminal in IDE
 4. Run ```npm i```
 5. Run ```npm start```
-6. Then you should see the app at http://localhost:3000/ opened in your browser
+6. Then you should see the app at http://localhost:3000/ opened in your browser or follow the link that appears in the terminal
 
-- then follow the link that appears in the terminal
+## How to launch Storybook locally:
+1. Clone the repository
+2. Open the project in IDE
+3. Open the terminal in IDE
+4. Run ```npm i```
+5. Run ```npm run storybook```
+6. Then you should see the Storybook at http://localhost:6006/ opened in your browser or follow the link that appears in the terminal
