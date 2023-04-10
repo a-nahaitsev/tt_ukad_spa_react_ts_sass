@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './ProductCard.module.scss';
 
-type Props = {
+export type Props = {
   id: number;
   imageUrl: string;
   category: string;

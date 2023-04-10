@@ -1,14 +1,22 @@
 import classNames from 'classnames';
 import React from 'react';
+import { SearchIconStyle } from '../../types/SearchIconStyle';
 import Icon from '../Icon/Icon';
 import styles from './SearchBar.module.scss';
 
 type Props = {
+  searchIconStyle?: SearchIconStyle;
+  placeholder?: string;
   query: string;
   changeQuery: (value: string) => void;
 };
 
-export const SearchBar: React.FC<Props> = ({ query, changeQuery }) => {
+export const SearchBar: React.FC<Props> = ({
+  searchIconStyle = SearchIconStyle.S0,
+  placeholder = 'Search for products',
+  query,
+  changeQuery,
+}) => {
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) =>
     event.preventDefault();
 
@@ -19,7 +27,7 @@ export const SearchBar: React.FC<Props> = ({ query, changeQuery }) => {
     <form className={styles.search} onSubmit={onFormSubmit}>
       <label className={styles.search__container}>
         <Icon
-          icon="search"
+          icon={searchIconStyle}
           className={classNames(
             styles.search__icon,
             styles[`search__icon-gray`]
@@ -31,7 +39,7 @@ export const SearchBar: React.FC<Props> = ({ query, changeQuery }) => {
           type="text"
           value={query}
           onChange={onQueryInput}
-          placeholder="Search for products"
+          placeholder={placeholder}
         />
       </label>
     </form>
